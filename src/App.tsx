@@ -1,35 +1,46 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Admin, Resource } from 'react-admin';
+import { dataProvider } from './dataProvider';
+import { authProvider } from './authProvider';
+import './App.css';
+import CategoryCreate from './components/category/categoryCreate';
+import CategoryEdit from './components/category/categoryEdit';
+import CategoryList from './components/category/categoryList';
+import CategoryIcon from '@mui/icons-material/Category';
+import LabelCreate from './components/label/labelCreate';
+import LabelList from './components/label/labelList';
+import LabelEdit from './components/label/labelEdit';
+import LabelIcon from '@mui/icons-material/Label';
+import BrandCreate from './components/brand/brandCreate';
+import BrandEdit from './components/brand/brandEdit';
+import BrandList from './components/brand/brandList';
+import BrandingWatermarkIcon from '@mui/icons-material/BrandingWatermark';
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export function App() {
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <Admin dataProvider={dataProvider} authProvider={authProvider}>
+      <Resource
+        name="category"
+        list={CategoryList}
+        edit={CategoryEdit}
+        create={CategoryCreate}
+        icon={CategoryIcon}
+      />
 
-export default App
+      <Resource
+        name="label"
+        list={LabelList}
+        create={LabelCreate}
+        edit={LabelEdit}
+        icon={LabelIcon}
+      />
+
+      <Resource
+        name="brand"
+        list={BrandList}
+        create={BrandCreate}
+        edit={BrandEdit}
+        icon={BrandingWatermarkIcon}
+      />
+    </Admin>
+  );
+}
