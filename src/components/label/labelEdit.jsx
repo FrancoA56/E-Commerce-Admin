@@ -9,7 +9,7 @@ const LabelEdit = (props) => {
     return (
         <Edit {...props}>
             <SimpleForm >
-                <TextInput source="name" label="Name" />
+                <TextInput source="name" label="Name" variant="standard"/>
                 <BooleanInput source="isDisable" label="Is Disable?" />
             </SimpleForm>
         </Edit>

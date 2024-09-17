@@ -3,8 +3,7 @@ import {
   List,
   Datagrid,
   TextField,
-  BooleanField,
-  DateField,
+  DateField
 } from 'react-admin';
 
 const CategoryList = (props) => (
@@ -14,8 +13,6 @@ const CategoryList = (props) => (
       <TextField source="name" />
       <DateField source="createdAt" />
       <DateField source="updatedAt" />
-      {/* Agregar columna personalizada para el botón de deshabilitar */}
-      <BooleanField source="disable" label="Disable" />
     </Datagrid>
   </List>
 );

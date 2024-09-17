@@ -1,22 +1,27 @@
-// components/category/DisableButton.tsx
+// components/category/ToggleDisableButton.tsx
 import { useNotify, useRefresh, useDataProvider } from 'react-admin';
 import Button from '@mui/material/Button';
 import BlockIcon from '@mui/icons-material/Block';
+import CheckIcon from '@mui/icons-material/Check';
 
-const DisableButton = ({ record }: { record: any }) => {
+const ToggleDisableButton = ({ record }: { record: any }) => {
   const notify = useNotify();
   const refresh = useRefresh();
   const dataProvider = useDataProvider();
 
-  const handleDisable = async () => {
+  const handleToggleDisable = async () => {
     try {
-      // Asegurarte de que el ID se pase correctamente en la ruta
-      await dataProvider.custom('api/category/disable', {
-        id: record.id, // El ID es importante para la ruta
-        data: { isDisable: true },
+      // Si la categoría está deshabilitada, la habilitamos, de lo contrario la deshabilitamos
+      const endpoint = record.isDisable ? 'undisable' : 'disable';
+
+      await dataProvider.update(`api/category/${endpoint}`, {
+        id: record.id,
+        data: { isDisable: !record.isDisable },
         previousData: record,
       });
-      notify('Category disabled', { type: 'info' });
+      
+      const action = record.isDisable ? 'enabled' : 'disabled';
+      notify(`Category ${action}`, { type: 'info' });
       refresh();
     } catch (error) {
       if (error instanceof Error) {
@@ -28,10 +33,10 @@ const DisableButton = ({ record }: { record: any }) => {
   };
 
   return (
-    <Button onClick={handleDisable} startIcon={<BlockIcon />}>
-      Disable
+    <Button onClick={handleToggleDisable} startIcon={record.isDisable ? <CheckIcon /> : <BlockIcon />}>
+      {record.isDisable ? 'Enable' : 'Disable'}
     </Button>
   );
 };
 
-export default DisableButton;
+export default ToggleDisableButton;
